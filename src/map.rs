@@ -507,7 +507,9 @@ pub fn update_loading_maps<UserData>(
             MapAttributes::set_animation_state(attributes, &mut mesh, &time);
 
             let mesh = Mesh2dHandle(meshes.add(mesh));
-            commands.entity(entity).insert(mesh);
+
+            // Using try_insert here to avoid panic if entity already deleted
+            commands.entity(entity).try_insert(mesh);
         }
 
         debug!("Map loaded: {:?}", map.map_size());
